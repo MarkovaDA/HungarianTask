@@ -2,9 +2,7 @@ package myhungarianalgorithm;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 
 
@@ -37,8 +35,8 @@ public class CrossOuter {
         Arrays.fill(rowsWithIndependentZero, false);
     }
     //поиск макс.числа независимых нулей
-    private void findMaxZeros(int row, int[][] matrix) {
-        if(row == size) 
+    private void findIndependantZeros(/*int row,*/ int[][] matrix) {
+        /*if(row == size) 
             return;
         for(int col=0; col < matrix.length;col++) {
             if (matrix[row][col] == 0 && !occupied[col]) {
@@ -50,7 +48,15 @@ public class CrossOuter {
                 //covers[row][col] = false;      
             }
         }
-        findMaxZeros(row + 1, matrix);
+        findMaxZeros(row + 1, matrix);*/
+        List<Edge> zeros = new BinaryGraph(matrix).independentZeros();
+        zeros.stream().forEach((zero) -> {
+            int rowIndex = zero.getStart();
+            int colIndex = zero.getEnd();
+            rowsWithIndependentZero[rowIndex] = true;
+            covers[rowIndex][colIndex] = true;
+        });
+        /*сovers - это матрица координат независимых нулей*/
     }
     
     void printCovers() {
@@ -68,7 +74,7 @@ public class CrossOuter {
     public int crossCount(int[][] matrix) {
         //countZerosInRowsCols(); - было
         this.clear();
-        this.findMaxZeros(0, matrix);//добавлено 
+        this.findIndependantZeros(matrix);//добавлено 
         
         checkedRows = new ArrayList<>();
         checkedCols = new ArrayList<>();

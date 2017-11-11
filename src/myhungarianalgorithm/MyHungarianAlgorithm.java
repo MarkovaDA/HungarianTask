@@ -1,6 +1,7 @@
 package myhungarianalgorithm;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class MyHungarianAlgorithm {
@@ -24,6 +25,7 @@ public class MyHungarianAlgorithm {
         //кол-во линий, использованных для вычеркивания
         int countLines = crossOuter.crossCount(matrix);
         print(matrix);
+        //пока получаем меньшее число линий для вычеркивания, чем нужно
         while(countLines < size) {
             //получаем дополнительные нули
             matrix = crossOuter.doAdditionalZeros(matrix);
@@ -34,12 +36,29 @@ public class MyHungarianAlgorithm {
             print(matrix);
         }
         //"собираем" независимые нули
-        int[][] solution = zerosFinder.getResult(matrix);
+        List<Edge> zeros = new BinaryGraph(matrix).independentZeros();
+        
+        int[][] solution =  getResultMatrix(zeros);
         int min = functionValue(solution);
         print(solution);
         System.out.printf("MIN: %d\n", min);
+        
+        /*int[][] solution = zerosFinder.getResult(matrix);
+        int min = functionValue(solution);
+        print(solution);
+        System.out.printf("MIN: %d\n", min);*/
+        
     }
-    
+ 
+    private int[][] getResultMatrix(List<Edge> path) {
+        int[][] result = new int[size][size];
+        path.stream().forEach((zero) -> {
+            int rowIndex = zero.getStart();
+            int colIndex = zero.getEnd();
+            result[rowIndex][colIndex] = 1;
+        });
+        return result;
+    }
     void copyMatrix() {
         source = new int[size][size];
         for(int i=0; i < size; i++) {

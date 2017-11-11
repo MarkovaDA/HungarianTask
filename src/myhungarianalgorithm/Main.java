@@ -27,8 +27,7 @@ public class Main {
                 {3,10,8,2,4}
             };
             MyHungarianAlgorithm algorithm = new MyHungarianAlgorithm(matrix);
-            algorithm.calculate();
-            
+            algorithm.calculate();  
         } catch (Exception ex) {
             Logger.getLogger(Main.class.getName()).log(Level.SEVERE, null, ex);
         }

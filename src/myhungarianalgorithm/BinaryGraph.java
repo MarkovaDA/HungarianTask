@@ -96,7 +96,7 @@ public class BinaryGraph {
                 }
                 Edge lastEdge = path.remove(path.size() - 1); //беру последнее ребро
                 historyMatrix[lastEdge.getStart()][lastEdge.getEnd()] = true;
-                findWay(lastEdge.getStart(), lastEdge.isDirect(), path);   
+                findWay(lastEdge.getEnd(), lastEdge.isDirect(), path);   
             }                
         }
         //работаем с колонкой

@@ -73,6 +73,7 @@ public class CrossOuter {
     */
     public int crossCount(int[][] matrix) {
         //countZerosInRowsCols(); - было
+        //ошибка: если нет строк с независимыми
         this.clear();
         this.findIndependantZeros(matrix);//добавлено 
         

@@ -21,23 +21,23 @@ public class MyHungarianAlgorithm {
     }
     
     void calculate() throws Exception {
-        reductionMatrix();
-        //кол-во линий, использованных для вычеркивания
-        int countLines = crossOuter.crossCount(matrix);
+        reductionMatrix();      
+        int countLines;//кол-во линий, использованных для вычеркивания
         print(matrix);
         //пока получаем меньшее число линий для вычеркивания, чем нужно
-        while(countLines < size) {
+        do {
+            //снова вычеркиваем
+            countLines = crossOuter.crossCount(matrix);
             //получаем дополнительные нули
             matrix = crossOuter.doAdditionalZeros(matrix);
             //выполняем редукцию на всякий случай
-            reductionMatrix();
-            //снова вычеркиваем
-            countLines = crossOuter.crossCount(matrix);
+            reductionMatrix(); 
+            //проблема - вычеркнули, но не преобразовали матрицу
             print(matrix);
         }
+        while(countLines < size);
         //"собираем" независимые нули
         List<Edge> zeros = new BinaryGraph(matrix).independentZeros();
-        
         int[][] solution =  getResultMatrix(zeros);
         int min = functionValue(solution);
         print(solution);
